@@ -1,0 +1,22 @@
+import { fetch } from 'wix-fetch';
+
+export async function generateLegalNotice(userInput) {
+    const apiKey = "YOUR_OPENAI_API_KEY"; // Replace with your API Key
+    const url = "https://api.openai.com/v1/completions";
+
+    const response = await fetch(url, {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+            "Authorization": `Bearer ${apiKey}`
+        },
+        body: JSON.stringify({
+            model: "text-davinci-003",
+            prompt: `Generate a legal notice based on the following input: ${userInput}`,
+            max_tokens: 500
+        })
+    });
+
+    const data = await response.json();
+    return data.choices[0].text;
+}
